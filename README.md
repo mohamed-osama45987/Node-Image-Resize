@@ -1,19 +1,19 @@
-
-# Node Image Resize 
+# Node Image Resize
 
 This project takes a image name and a custom width and height as query prameters and resize
 the image according to the given width and height
 
-
-
-
-
-## Appendix
+## Important
 
 You need Node to be installed to run this project
 
-All request must use this api route /api/image?filename="fileName"
+Move all of the images you want to work inside this directory
 
+/assets/full
+
+All request must use this api route :-
+
+    /api/image?filename="fileName"&width="any number"&height="any number"
 
 ## Run Locally
 
@@ -47,13 +47,11 @@ Start the production server
   npm run start
 ```
 
-
 Run the tests
 
 ```bash
   npm run test
 ```
-
 
 Run the development server
 
