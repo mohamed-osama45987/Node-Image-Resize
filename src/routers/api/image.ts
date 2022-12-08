@@ -1,5 +1,5 @@
 import express from 'express'
-import ImageControllers from '../../controllers/images'
+import { resizeImage } from '../../controllers/images'
 import { query } from 'express-validator'
 
 const router = express.Router()
@@ -9,17 +9,23 @@ router.get(
     // some input validation
 
     [
-        query('filename', 'Please Enter a valid filename ')
+        query('filename', 'Please Enter a valid filename as query parameter')
             .not()
             .isEmpty()
             .trim()
             .isString()
             .isLength({ min: 2 }),
-        query('width', 'Please Enter a valid width').isFloat(),
-        query('height', 'Please Enter a file height').isFloat(),
+        query(
+            'width',
+            'Please Enter a valid width as query parameter'
+        ).isFloat(),
+        query(
+            'height',
+            'Please Enter a file height as query parameter'
+        ).isFloat(),
     ],
 
-    ImageControllers.resizeImage
+    resizeImage
 )
 
 export default router

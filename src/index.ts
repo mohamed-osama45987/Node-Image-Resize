@@ -11,20 +11,32 @@ app.use(express.static('/assets'))
 app.use(indexRoutes)
 app.use('/api', apiRoutes)
 
+// 404 route
 app.use((req: express.Request, res: express.Response) => {
     return res.status(404).send('Page not found ')
 })
 
+// error handling middleware
+
+class StatsError extends Error {
+    statusCode: number | undefined
+}
 app.use(
     (
-        error: express.ErrorRequestHandler,
+        error: StatsError,
         req: express.Request,
-        res: express.Response
+        res: express.Response,
+        next: express.NextFunction
     ) => {
-        return res.status(500).send('Somthing went wrong')
+        res.status(error.statusCode as number).json({
+            message: error.message,
+            statusCode: error.statusCode,
+        })
     }
 )
 
 app.listen(port, () => {
     console.log(`App is started at http://localhost:${port}`)
 })
+
+export default app
