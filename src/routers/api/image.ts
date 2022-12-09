@@ -17,11 +17,11 @@ router.get(
             .isLength({ min: 2 }),
         query(
             'width',
-            'Please Enter a valid width as query parameter'
+            'Please Enter a valid number as width query parameter'
         ).isFloat(),
         query(
             'height',
-            'Please Enter a file height as query parameter'
+            'Please Enter a valid number as height query parameter'
         ).isFloat(),
     ],
 

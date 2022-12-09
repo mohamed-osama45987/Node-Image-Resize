@@ -11,6 +11,6 @@ export const makePath = (
         '..',
         'assets',
         folderName,
-        filename + fileExtension
+        filename.replace(/"|'/g, '').concat(fileExtension)
     )
 }

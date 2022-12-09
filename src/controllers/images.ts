@@ -49,7 +49,8 @@ export const resizeImage = (
             })
             .toFile(outputImagePath)
 
-        return res.status(200).sendFile(outputImagePath)
+        res.status(200).sendFile(outputImagePath)
+        return outputImagePath
     })
 
     fullImage.on('error', () => {
@@ -58,7 +59,7 @@ export const resizeImage = (
         )
 
         error.statusCode = 404
-
-        return next(error)
+        next(error)
+        return error
     })
 }

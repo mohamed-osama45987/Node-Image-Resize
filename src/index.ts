@@ -12,8 +12,8 @@ app.use(indexRoutes)
 app.use('/api', apiRoutes)
 
 // 404 route
-app.use((req: express.Request, res: express.Response) => {
-    return res.status(404).send('Page not found ')
+app.use((req: express.Request, res: express.Response): express.Response => {
+    return res.status(404).send('<h1>Page not found</h1>')
 })
 
 // error handling middleware
@@ -26,16 +26,17 @@ app.use(
         error: StatsError,
         req: express.Request,
         res: express.Response,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         next: express.NextFunction
-    ) => {
-        res.status(error.statusCode as number).json({
+    ): express.Response => {
+        return res.status(error.statusCode as number).json({
             message: error.message,
             statusCode: error.statusCode,
         })
     }
 )
 
-app.listen(port, () => {
+app.listen(port, (): void => {
     console.log(`App is started at http://localhost:${port}`)
 })
 

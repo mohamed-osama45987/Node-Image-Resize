@@ -13,7 +13,7 @@ Move all of the images you want to work inside this directory
 
 All request must use this api route :-
 
-    /api/image?filename="fileName"&width="any number"&height="any number"
+    /api/image?filename="fileName"&width=200&height=200
 
 ## Run Locally
 
