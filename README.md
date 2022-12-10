@@ -15,6 +15,8 @@ All request must use this api route :-
 
     /api/image?filename="fileName"&width=200&height=200
 
+The Processed Image will be inside assets/thumb directory
+
 ## Run Locally
 
 Clone the project
