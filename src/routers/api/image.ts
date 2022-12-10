@@ -1,8 +1,8 @@
-import express from 'express'
-import { resizeImage } from '../../controllers/images'
-import { query } from 'express-validator'
+import express from 'express';
+import { resizeImage } from '../../controllers/images';
+import { query } from 'express-validator';
 
-const router = express.Router()
+const router = express.Router();
 
 router.get(
     '/image',
@@ -15,17 +15,11 @@ router.get(
             .trim()
             .isString()
             .isLength({ min: 2 }),
-        query(
-            'width',
-            'Please Enter a valid number as width query parameter'
-        ).isFloat(),
-        query(
-            'height',
-            'Please Enter a valid number as height query parameter'
-        ).isFloat(),
+        query('width', 'Please Enter a valid number as width query parameter').isFloat(),
+        query('height', 'Please Enter a valid number as height query parameter').isFloat(),
     ],
 
-    resizeImage
-)
+    resizeImage,
+);
 
-export default router
+export default router;
