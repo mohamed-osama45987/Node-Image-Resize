@@ -15,8 +15,12 @@ router.get(
             .trim()
             .isString()
             .isLength({ min: 2 }),
-        query('width', 'Please Enter a valid number as width query parameter').isFloat(),
-        query('height', 'Please Enter a valid number as height query parameter').isFloat(),
+        query('width', 'Please Enter a valid number as width query parameter').not().isEmpty().trim().isInt({ min: 1 }),
+        query('height', 'Please Enter a valid number as height query parameter')
+            .not()
+            .isEmpty()
+            .trim()
+            .isInt({ min: 1 }),
     ],
 
     resizeImage,

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { query } from 'express';
 
 import { validationResult } from 'express-validator';
 import { makePath } from '../util/constructPath';
@@ -9,12 +9,12 @@ class StatsError extends Error {
     statusCode: number | undefined;
 }
 
-export const resizeImage = (
+export const resizeImage = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
-): express.Response | void => {
-    // validation errors
+): Promise<string> => {
+    // validation errors handeling
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
@@ -22,11 +22,12 @@ export const resizeImage = (
 
         const error = new StatsError(firstError[0].msg);
         error.statusCode = 403;
-
-        return next(error);
+        next(error);
+        return 'Validation Error';
     }
 
     const filename = req.query.filename as string;
+
     const width = Number(req.query.width) as number;
     const height = Number(req.query.height) as number;
 
@@ -36,8 +37,8 @@ export const resizeImage = (
     const outputImagePath: string = makePath(`${filename}-${width}-${height}_thumb`, 'thumb', '.jpg');
 
     if (!fileExist(outputImagePath)) {
-        useSharp(inputImagePath, outputImagePath, width, height);
+        await useSharp(inputImagePath, outputImagePath, width, height);
     }
-
-    return res.status(200).sendFile(outputImagePath);
+    res.status(200).sendFile(outputImagePath);
+    return outputImagePath;
 };
