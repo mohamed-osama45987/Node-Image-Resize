@@ -1,8 +1,9 @@
 import express from 'express';
-import fs from 'fs';
-import sharp from 'sharp';
+
 import { validationResult } from 'express-validator';
 import { makePath } from '../util/constructPath';
+import { fileExist } from '../util/fileExist';
+import { useSharp } from '../util/resizeImage';
 
 class StatsError extends Error {
     statusCode: number | undefined;
@@ -32,28 +33,11 @@ export const resizeImage = (
     // constructing input file path ../../assets/full/${file name(w x h)}
     const inputImagePath: string = makePath(filename, 'full', '.jpg');
 
-    const outputImagePath: string = makePath(`${filename}( ${width} x ${height} )_thumb`, 'thumb', '.jpg');
+    const outputImagePath: string = makePath(`${filename}-${width}-${height}_thumb`, 'thumb', '.jpg');
 
-    const fullImage = fs.createReadStream(inputImagePath);
+    if (!fileExist(outputImagePath)) {
+        useSharp(inputImagePath, outputImagePath, width, height);
+    }
 
-    fullImage.on('open', async () => {
-        //  resize the image if you can find original full image and save it
-        await sharp(inputImagePath)
-            .resize({
-                width,
-                height,
-            })
-            .toFile(outputImagePath);
-
-        res.status(200).sendFile(outputImagePath);
-        return outputImagePath;
-    });
-
-    fullImage.on('error', () => {
-        const error = new StatsError('Please put an image inside the assets/full folder to be processed ');
-
-        error.statusCode = 404;
-        next(error);
-        return error;
-    });
+    return res.status(200).sendFile(outputImagePath);
 };
