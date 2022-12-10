@@ -32,9 +32,9 @@ export const resizeImage = async (
     const height = Number(req.query.height) as number;
 
     // constructing input file path ../../assets/full/${file name(w x h)}
-    const inputImagePath: string = makePath(filename, 'full', '.jpg');
+    const inputImagePath: string = makePath(filename, 'full');
 
-    const outputImagePath: string = makePath(`${filename}-${width}-${height}_thumb`, 'thumb', '.jpg');
+    const outputImagePath: string = makePath(`${filename}-${width}-${height}_thumb`, 'thumb');
 
     if (!fileExist(outputImagePath)) {
         await useSharp(inputImagePath, outputImagePath, width, height);
