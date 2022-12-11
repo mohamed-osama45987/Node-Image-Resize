@@ -1,7 +1,7 @@
 import app from '../index';
 import request from 'supertest';
 
-describe('Api responses test', () => {
+describe('Api responses (routes) test', () => {
     it('Should return status code 200 for index of the project ', async () => {
         const response = await request(app).get('/');
         expect(response.status).toEqual(200);
@@ -9,7 +9,7 @@ describe('Api responses test', () => {
 
     it('should return an error code 403 when api/image no prams provided', async () => {
         const response = await request(app).get('/api/image');
-        expect(response.body.message).toBe('Please Enter a valid filename as query parameter');
+        expect(response.body.message).toBe('File name can not be empty please enter a file name');
         expect(response.status).toEqual(403);
     });
 

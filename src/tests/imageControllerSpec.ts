@@ -8,7 +8,7 @@ describe('Image Controller Tests', () => {
         expect(response.statusCode).toEqual(403);
 
         expect(response.body).toEqual({
-            message: 'Please Enter a valid filename as query parameter',
+            message: 'File name can not be empty please enter a file name',
             statusCode: 403,
         });
     });
@@ -19,7 +19,7 @@ describe('Image Controller Tests', () => {
         expect(response.statusCode).toEqual(403);
 
         expect(response.body).toEqual({
-            message: 'Please Enter a valid number as width query parameter',
+            message: 'Width must be a number bigger than 0',
             statusCode: 403,
         });
     });
