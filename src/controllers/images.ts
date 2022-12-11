@@ -36,6 +36,13 @@ export const resizeImage = async (
 
     const outputImagePath: string = makePath(`${filename}-${width}-${height}_thumb`, 'thumb');
 
+    if (!fileExist(inputImagePath)) {
+        const error = new StatsError('Invalid original file name make sure you enter a correct file name');
+        error.statusCode = 404;
+        next(error);
+        return 'File does not exist in the assets/full folder ';
+    }
+
     if (!fileExist(outputImagePath)) {
         await useSharp(inputImagePath, outputImagePath, width, height);
     }

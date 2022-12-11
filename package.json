@@ -8,8 +8,8 @@
         "build": "npx tsc",
         "start:dev": "nodemon --exec npx ts-node src/index.ts",
         "start": "node build/index.js",
-        "lint": "eslint --ext .js,.ts --fix --quiet",
-        "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+        "lint": "eslint --ext .ts",
+        "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts)\""
     },
     "author": "",
     "license": "ISC",

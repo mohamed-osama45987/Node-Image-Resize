@@ -9,18 +9,29 @@ router.get(
     // some input validation
 
     [
-        query('filename', 'Please Enter a valid filename as query parameter')
+        query('filename')
             .not()
             .isEmpty()
+            .withMessage('File name can not be empty please enter a file name ')
             .trim()
             .isString()
-            .isLength({ min: 2 }),
-        query('width', 'Please Enter a valid number as width query parameter').not().isEmpty().trim().isInt({ min: 1 }),
+            .isLength({ min: 2 })
+            .withMessage('File name must be a string with at least 2 characteres  '),
+
+        query('width')
+            .not()
+            .isEmpty()
+            .withMessage('Width can not be empty please enter a valid width ')
+            .trim()
+            .isInt({ min: 1 })
+            .withMessage('Width must be a number bigger than 0'),
         query('height', 'Please Enter a valid number as height query parameter')
             .not()
             .isEmpty()
+            .withMessage('Width can not be empty please enter a valid width ')
             .trim()
-            .isInt({ min: 1 }),
+            .isInt({ min: 1 })
+            .withMessage('Width must be a number bigger than 0'),
     ],
 
     resizeImage,
